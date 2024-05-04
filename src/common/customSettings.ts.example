@@ -1,0 +1,9 @@
+export const CUSTOM_SETTINGS = {
+  // 実際に利用するdiscordのRoleIDとロール名称のマッピングを設定してください
+  roles: {
+    "1000000000000000000": "Admins",
+    "1000000000000000001": "Member",
+    "1000000000000000002": "CommunityManager",
+    "1000000000000000003": "Supporter",
+  },
+};

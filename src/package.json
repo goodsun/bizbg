@@ -1,0 +1,29 @@
+{
+  "name": "bizbg",
+  "version": "1.0.0",
+  "description": "bizendao lamba background",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "sh ../deploy/build.sh local && exit 1",
+    "test": "sh ../deploy/build.sh test && exit 1",
+    "build": "sh ../deploy/build.sh prd && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goodsun/bizbg.git"
+  },
+  "author": "goodsun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/goodsun/bizbg/issues"
+  },
+  "homepage": "https://github.com/goodsun/bizbg#readme",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.569.0",
+    "@aws-sdk/client-s3": "^3.569.0",
+    "@aws-sdk/client-sqs": "^3.569.0",
+    "@notionhq/client": "^2.2.15",
+    "dotenv": "^16.4.5"
+  }
+}
