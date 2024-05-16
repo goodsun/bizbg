@@ -4,6 +4,7 @@ dotenv.config();
 export const CONST = {
   API_ENV: process.env.API_ENV,
   API_URL: process.env.API_URL,
+  VERSION: process.env.VERSION,
   PROVIDER_URL: process.env.PROVIDER_URL,
   SQS_QUEUE_URL: process.env.SQS_QUEUE_URL,
   DISCORD_GUILD_ID: process.env.DISCORD_GUILD_ID,

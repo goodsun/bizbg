@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "sh ../deploy/build.sh local && exit 1",
-    "test": "sh ../deploy/build.sh test && exit 1",
-    "build": "sh ../deploy/build.sh prd && exit 1"
+    "dev": "sh ./deploy/build.sh local && exit 1 ",
+    "test": "sh ./deploy/build.sh test && exit 1",
+    "deploy": "sh ./deploy/build.sh prd && exit 1"
   },
   "repository": {
     "type": "git",

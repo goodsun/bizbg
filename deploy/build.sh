@@ -1,4 +1,6 @@
 #!/bin/bash
+LAMBDA_FUNCTION_NAME=callNotionUpdate
+
 dir=$(cd $(dirname $0); pwd)
 cd ${dir}
 
@@ -24,14 +26,17 @@ else
 	exit
 fi
 
+date +'VERSION=%Y%m%d%H%M%S' >> ../dist/.env
+
 echo "DIR:" $dir
 echo "MODE:" $1
+echo "NAME:" $LAMBDA_FUNCTION_NAME
 
 cd ../src
 tsc
-cp package.json ../dist
-cp package-lock.json ../dist
-cp -r node_modules ../dist
+cp ../package.json ../dist
+cp ../package-lock.json ../dist
+cp -r ../node_modules ../dist
 
 cd ../dist
 if [ $1 = 'local' ]; then
@@ -44,4 +49,6 @@ else
 	zip ${dir}/../${filename} .env
 	zip --delete ${dir}/../${filename} develop.js
 	zip --delete ${dir}/../${filename} test/*
+        cd ${dir}/../
+        aws lambda update-function-code --function-name ${LAMBDA_FUNCTION_NAME} --zip-file fileb://${filename}
 fi
