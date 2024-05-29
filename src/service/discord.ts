@@ -52,7 +52,7 @@ const getMemberList = async (nextid = null) => {
 
     const member: any = {};
 
-    member.id = parseInt(data.user.id);
+    member.id = data.user.id;
 
     if (data.nick) {
       member.name = data.nick;
@@ -83,7 +83,7 @@ const getMemberList = async (nextid = null) => {
   if (result.length === 1000) {
     const headers = await response.headers;
     // x-ratelimit-remaining残りが3を切ったら1秒待つ
-    if (parseInt(headers.get("x-ratelimit-remaining")) <= 3) {
+    if (Number(headers.get("x-ratelimit-remaining")) <= 3) {
       console.log("set timeout", headers.get("x-ratelimit-reset-after"));
       await setTimeout(1000);
     }

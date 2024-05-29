@@ -128,7 +128,7 @@ const memberListUpdate = async (discordList, dynamoList) => {
   for (let key in discordList) {
     const member = discordList[key];
     const filteredItems = dynamoList.filter(
-      (item) => parseInt(item.DiscordId.N) === member.id
+      (item) => String(item.DiscordId.N) === String(member.id)
     );
     if (filteredItems.length == 0) {
       addCnt++;
@@ -155,7 +155,7 @@ const memberListUpdate = async (discordList, dynamoList) => {
     const member = dynamoList[key];
     if (member) {
       const filteredItems = discordList.filter(
-        (item) => item.id === parseInt(member.DiscordId.N)
+        (item) => String(item.id) === String(member.DiscordId.N)
       );
       if (filteredItems.length == 0) {
         delCnt++;

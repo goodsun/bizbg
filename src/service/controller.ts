@@ -29,7 +29,7 @@ const notionList = async () => {
 
 const sqsSend = async (message: Message) => {
   const result = await sqsService.sendMessage(JSON.stringify(message));
-  console.log("SendMes" + result);
+  console.log("SendMes SQS" + JSON.stringify(message));
   return result;
 };
 const notionUpdate = async () => {

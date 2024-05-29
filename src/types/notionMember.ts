@@ -16,7 +16,7 @@ export const NotionMember = {
         title: [{ text: { content: "DiscordName" } }],
       },
       id: {
-        number: 0,
+        rich_text: [{ text: { content: "DiscordId" } }],
       },
       icon: {
         files: [],
@@ -44,7 +44,7 @@ export const NotionMember = {
         title: [{ text: { content: "DiscordName" } }],
       },
       id: {
-        number: 0,
+        rich_text: [{ text: { content: "DiscordId" } }],
       },
       roles: {
         multi_select: {},

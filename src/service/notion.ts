@@ -69,7 +69,7 @@ const getMemberList = async (nextid = null) => {
   const response = await notionQuery(request);
   const members = response.results.map((data) => {
     const member: any = {};
-    member.id = data.properties.id.number;
+    member.id = data.properties.id.rich_text[0].plain_text;
     member.name = data.properties.name.title[0].plain_text;
     member.roles = data.properties.roles.multi_select.map((role) => {
       return role.name;
@@ -126,14 +126,14 @@ const memberListUpdate = async (discordList, notionList) => {
 
     if (filteredItems.length == 0) {
       addCnt++;
-      console.log("CREATE : " + member.name);
+      console.log("CheckMemberId : " + String(member.id));
 
       const params = NotionMember.create;
       params.icon.external.url = member.icon;
       params.properties.name.title = [{ text: { content: member.name } }];
       params.properties.roles.multi_select = roles;
       params.properties.join.date.start = member.join;
-      params.properties.id.number = parseInt(member.id);
+      params.properties.id.rich_text = [{ text: { content: member.id } }];
       params.properties.icon.files = icon;
       await notionCreate(params);
     } else {
@@ -158,7 +158,7 @@ const memberListUpdate = async (discordList, notionList) => {
         params.properties.name.title = [{ text: { content: member.name } }];
         params.properties.roles.multi_select = roles;
         params.properties.join.date.start = member.join;
-        params.properties.id.number = parseInt(member.id);
+        params.properties.id.rich_text = [{ text: { content: member.id } }];
         params.properties.icon.files = icon;
         await notionUpdate(params);
       }
