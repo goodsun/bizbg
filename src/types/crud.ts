@@ -27,7 +27,7 @@ export const CRUD = {
       Roles: { SS: ["none"] },
       Join: { S: new Date() },
       DeleteFlag: { BOOL: "false" },
-      Update: { S: new Date() },
+      Updated: { S: new Date() },
     },
   },
   read: {

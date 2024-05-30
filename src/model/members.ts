@@ -31,7 +31,7 @@ const getDisplayMember = async (req) => {
     result = result + "<br /> roles : " + member.Roles.SS;
     result = result + "<br /> join : " + member.Join.S;
     result = result + "<br /> exit : " + member.DeleteFlag.BOOL;
-    result = result + "<br /> update : " + member.Update.S;
+    result = result + "<br /> update : " + member.Updated.S;
   }
   result = result + "</div>";
   return result;
