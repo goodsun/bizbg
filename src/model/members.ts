@@ -1,7 +1,7 @@
 import { CRUD } from "../types/crud.js";
 import { CONST } from "../common/const.js";
 import dynamoService from "../service/dynamo.js";
-const TableName = CONST.DYNAMO_MEMBER_TABLENAME;
+const TableName = CONST.DYNAMO_TABLE_PREFIX + "_member";
 
 const getMemberList = async () => {
   let params = CRUD.query;

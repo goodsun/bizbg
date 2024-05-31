@@ -13,9 +13,9 @@ const discordList = async () => {
 };
 
 const dynamoList = async () => {
-  console.log("DYNAMO SETTING : " + CONST.DYNAMO_MEMBER_TABLENAME);
+  console.log("DYNAMO SETTING : " + CONST.DYNAMO_TABLE_PREFIX);
   const result = await dynamoService.getDisplayData(
-    CONST.DYNAMO_MEMBER_TABLENAME
+    CONST.DYNAMO_TABLE_PREFIX + "_member"
   );
   console.log("Dynamo test:" + result);
   return result;

@@ -1,5 +1,5 @@
 import { CONST } from "../common/const.js";
-const TableName = CONST.DYNAMO_MEMBER_TABLENAME;
+const TableName = CONST.DYNAMO_TABLE_PREFIX + "_member";
 
 export const CRUD = {
   create: {
