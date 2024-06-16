@@ -44,9 +44,7 @@ export const CRUD = {
       DiscordId: { N: "0" },
     },
     UpdateExpression: "SET Icon = :newVal",
-    ExpressionAttributeValues: {
-      ":newVal": { S: CONST.DISCORD_DUMMY_ICON } as object,
-    },
+    ExpressionAttributeValues: {},
   },
   delete: {
     TableName: TableName,

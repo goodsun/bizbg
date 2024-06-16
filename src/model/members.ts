@@ -84,6 +84,7 @@ const memberCreate = async (member) => {
 
 const memberUpdate = async (member) => {
   console.log("dynamo メンバー更新");
+  /*
   let params = CRUD.write;
   params.TableName = TableName;
   params.Item.DiscordId.N = String(member.id);
@@ -95,6 +96,19 @@ const memberUpdate = async (member) => {
     params.Item.Roles.SS = member.roles;
   }
   await dynamoService.putItem(params);
+  */
+  let params = CRUD.update;
+  params.TableName = TableName;
+  params.Key.DiscordId.N = String(member.DiscordId);
+  params.UpdateExpression =
+    "SET Name = :Name, Icon = :Icon,  Roles= :Roles, Updated = :updated";
+  params.ExpressionAttributeValues = {
+    ":Name": { S: member.name } as object,
+    ":Icon": { S: member.icon } as object,
+    ":Roles": { SS: member.roles } as object,
+    ":updated": { S: new Date(new Date().getTime()) } as object,
+  };
+  await dynamoService.updateItem(params);
 };
 
 const memberDelete = async (member) => {
