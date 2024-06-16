@@ -44,6 +44,7 @@ export const CRUD = {
       DiscordId: { N: "0" },
     },
     UpdateExpression: "SET Icon = :newVal",
+    ExpressionAttributeNames: {},
     ExpressionAttributeValues: {},
   },
   delete: {

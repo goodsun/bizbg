@@ -84,28 +84,22 @@ const memberCreate = async (member) => {
 
 const memberUpdate = async (member) => {
   console.log("dynamo メンバー更新");
-  /*
-  let params = CRUD.write;
-  params.TableName = TableName;
-  params.Item.DiscordId.N = String(member.id);
-  params.Item.Name.S = member.name;
-  params.Item.Icon.S = member.icon;
-  if (member.roles.length == 0) {
-    params.Item.Roles.SS = [""];
-  } else {
-    params.Item.Roles.SS = member.roles;
-  }
-  await dynamoService.putItem(params);
-  */
+  console.dir(member);
   let params = CRUD.update;
   params.TableName = TableName;
-  params.Key.DiscordId.N = String(member.DiscordId);
+  params.Key.DiscordId.N = String(member.id);
   params.UpdateExpression =
-    "SET Name = :Name, Icon = :Icon,  Roles= :Roles, Updated = :updated";
+    "SET #Name = :Name, #Icon = :Icon, #Roles= :roles, #Updated = :updated";
+  params.ExpressionAttributeNames = {
+    "#Name": "Name",
+    "#Icon": "Icon",
+    "#Roles": "Roles",
+    "#Updated": "Updated",
+  } as object;
   params.ExpressionAttributeValues = {
     ":Name": { S: member.name } as object,
     ":Icon": { S: member.icon } as object,
-    ":Roles": { SS: member.roles } as object,
+    ":roles": { SS: member.roles } as object,
     ":updated": { S: new Date(new Date().getTime()) } as object,
   };
   await dynamoService.updateItem(params);
