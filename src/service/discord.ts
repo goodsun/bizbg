@@ -99,6 +99,7 @@ const getMemberList = async (nextid = null) => {
     } else {
       member.name = data.user.username;
     }
+    member.username = data.user.username;
 
     member.roles = [];
     for (let i = 0; i < data.roles.length; i++) {
@@ -164,11 +165,10 @@ const getDisplayData = async () => {
   return result;
 };
 
-const sendDiscordMessage = async () => {
-  const url =
-    "https://discord.com/api/v10/channels/1145185184543686776/messages";
+const sendDiscordMessage = async (message, channelId) => {
+  const url = "https://discord.com/api/v10/channels/" + channelId + "/messages";
   const body = {
-    content: "これはBGから送信されたメッセージです。",
+    content: message,
   };
   const result = await sendApi(url, "post", body);
   return result;

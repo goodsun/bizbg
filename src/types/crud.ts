@@ -23,6 +23,7 @@ export const CRUD = {
       PartitionName: { S: "Users" },
       DiscordId: { N: "0" },
       Name: { S: "Discord Name" },
+      Username: { S: "Discord Name" },
       Icon: { S: "https://example.com/test.png" },
       Roles: { SS: ["none"] },
       Join: { S: new Date() },

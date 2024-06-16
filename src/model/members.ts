@@ -73,6 +73,7 @@ const memberCreate = async (member) => {
   params.TableName = TableName;
   params.Item.DiscordId.N = String(member.id);
   params.Item.Name.S = member.name;
+  params.Item.Username.S = member.username;
   params.Item.Icon.S = member.icon;
   params.Item.Join.S = member.join;
   if (member.roles.length == 0) {
@@ -85,25 +86,29 @@ const memberCreate = async (member) => {
 
 const memberUpdate = async (member) => {
   console.log("dynamo メンバー更新");
-  discordService.sendDiscordMessage();
-  console.dir(member);
   let params = CRUD.update;
   params.TableName = TableName;
   params.Key.DiscordId.N = String(member.id);
   params.UpdateExpression =
-    "SET #Name = :Name, #Icon = :Icon, #Roles= :roles, #Updated = :updated";
+    "SET #Name = :Name, #Username = :Username, #Icon = :Icon, #Roles= :roles, #Updated = :updated";
   params.ExpressionAttributeNames = {
     "#Name": "Name",
+    "#Username": "Username",
     "#Icon": "Icon",
     "#Roles": "Roles",
     "#Updated": "Updated",
   } as object;
   params.ExpressionAttributeValues = {
     ":Name": { S: member.name } as object,
+    ":Username": { S: member.username } as object,
     ":Icon": { S: member.icon } as object,
     ":roles": { SS: member.roles } as object,
     ":updated": { S: new Date(new Date().getTime()) } as object,
   };
+  discordService.sendDiscordMessage(
+    "<@" + member.id + ">の情報が更新されました",
+    "1145185184543686776"
+  );
   await dynamoService.updateItem(params);
 };
 
@@ -152,6 +157,7 @@ const memberListUpdate = async (discordList, dynamoList) => {
       );
       if (
         member.name !== filteredItems[0].Name.S ||
+        member.username !== filteredItems[0].Username.S ||
         member.icon !== filteredItems[0].Icon.S ||
         dcRoles !== dyRoles
       ) {

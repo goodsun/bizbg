@@ -1,5 +1,6 @@
 import { CONST } from "./common/const.js";
 import controller from "./service/controller.js";
+import discordService from "./service/discord.js";
 
 export const handler = async (event) => {
   for (let key in event.Records) {
@@ -23,6 +24,19 @@ export const handler = async (event) => {
             CONST.VERSION
         );
         await controller.dynamoUpdate();
+        break;
+      case "discord-meessage":
+        console.log(
+          "dynamoList updated processing | VER." +
+            CONST.API_ENV +
+            "-" +
+            CONST.VERSION
+        );
+        console.dir(message);
+        await discordService.sendDiscordMessage(
+          message.params.message,
+          message.params.channelId
+        );
         break;
       default:
         console.log(
