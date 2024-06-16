@@ -16,6 +16,46 @@ async function loadCustomConstants() {
   }
 }
 
+const sendApi = async (endpoint, method, body) => {
+  console.log(method + " : " + endpoint + "botkey : " + bot_key);
+  const response = await fetch(endpoint, {
+    headers: {
+      accept: "*/*",
+      "User-Agent": "bonsoleilDiscordBot (https://github.com/goodsun/bizbot)",
+      "accept-language": "ja,en-US;q=0.9,en;q=0.8",
+      authorization: `Bot ${bot_key}`,
+      "Content-Type": "application/json",
+      "sec-fetch-dest": "empty",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-site": "same-origin",
+      "sec-gpc": "1",
+      "x-discord-locale": "ja",
+    },
+    referrerPolicy: "strict-origin-when-cross-origin",
+    body: JSON.stringify(body),
+    method: method,
+    mode: "cors",
+    credentials: "include",
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        return response.json().then((error) => {
+          throw new Error(`Error ${response.status}: ${error.message}`);
+        });
+      }
+    })
+    .then((data) => {
+      console.log("メッセージが正常に送信されました");
+    })
+    .catch((error) => {
+      console.error("メッセージの送信に失敗しました:", error.message);
+    });
+  console.dir(response);
+  return response;
+};
+
 const getMemberList = async (nextid = null) => {
   await loadCustomConstants();
   let endpoint = `https://discord.com/api/v10/guilds/${guild_id}/members?limit=1000`;
@@ -124,7 +164,19 @@ const getDisplayData = async () => {
   return result;
 };
 
+const sendDiscordMessage = async () => {
+  const url =
+    "https://discord.com/api/v10/channels/1145185184543686776/messages";
+  const body = {
+    content: "これはBGから送信されたメッセージです。",
+  };
+  const result = await sendApi(url, "post", body);
+  return result;
+};
+
 const discordService = {
+  sendApi,
+  sendDiscordMessage,
   getList,
   getMemberList,
   getDisplayData,

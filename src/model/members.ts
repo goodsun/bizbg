@@ -1,6 +1,7 @@
 import { CRUD } from "../types/crud.js";
 import { CONST } from "../common/const.js";
 import dynamoService from "../service/dynamo.js";
+import discordService from "../service/discord.js";
 const TableName = CONST.DYNAMO_TABLE_PREFIX + "_member";
 
 const getMemberList = async () => {
@@ -84,6 +85,7 @@ const memberCreate = async (member) => {
 
 const memberUpdate = async (member) => {
   console.log("dynamo メンバー更新");
+  discordService.sendDiscordMessage();
   console.dir(member);
   let params = CRUD.update;
   params.TableName = TableName;
