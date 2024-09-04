@@ -25,7 +25,7 @@ export const handler = async (event) => {
         );
         await controller.dynamoUpdate();
         break;
-      case "discord-meessage":
+      case "discord-message":
         console.log(
           "dynamoList updated processing | VER." +
             CONST.API_ENV +
@@ -36,6 +36,21 @@ export const handler = async (event) => {
         await discordService.sendDiscordMessage(
           message.params.message,
           message.params.channelId
+        );
+        break;
+      case "nft-getkey":
+        console.log("NFT| GETKEY." + CONST.API_ENV + "-" + CONST.VERSION);
+        console.dir(message);
+
+        const response = await fetch("https://nft.bon-soleil.com/");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.text();
+
+        await discordService.sendDiscordMessage(
+          message.params.eoa + ":" + message.params.nftInfo + data,
+          "1145185184543686776"
         );
         break;
       default:
