@@ -26,30 +26,42 @@ export const handler = async (event) => {
         await controller.dynamoUpdate();
         break;
       case "discord-message":
-        console.log(
-          "dynamoList updated processing | VER." +
-            CONST.API_ENV +
-            "-" +
-            CONST.VERSION
-        );
+        console.log("discord-message" + CONST.API_ENV + "-" + CONST.VERSION);
         console.dir(message);
         await discordService.sendDiscordMessage(
           message.params.message,
           message.params.channelId
         );
         break;
+      case "discord-direct-message":
+        console.log(
+          "discord-Direct-message" + CONST.API_ENV + "-" + CONST.VERSION
+        );
+        console.dir(message);
+        await discordService.sendDiscordDm(
+          message.params.message,
+          message.params.userId
+        );
+        break;
       case "nft-getkey":
         console.log("NFT| GETKEY." + CONST.API_ENV + "-" + CONST.VERSION);
         console.dir(message);
 
-        const response = await fetch("https://nft.bon-soleil.com/");
+        const response = await fetch(
+          "https://ehfm6q914a.execute-api.ap-northeast-1.amazonaws.com/getkey/" +
+            message.params.uid +
+            "/" +
+            message.params.contract +
+            "/" +
+            message.params.id
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.text();
+        const data = await response.json();
 
         await discordService.sendDiscordMessage(
-          message.params.eoa + ":" + message.params.nftInfo + data,
+          message.params.uid + "\n" + data.content,
           "1145185184543686776"
         );
         break;

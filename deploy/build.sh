@@ -1,5 +1,4 @@
 #!/bin/bash
-LAMBDA_FUNCTION_NAME=callNotionUpdate
 
 dir=$(cd $(dirname $0); pwd)
 cd ${dir}
@@ -8,11 +7,13 @@ rm -r ../dist
 mkdir ../dist
 
 if [ $1 = 'stg' ]; then
+	LAMBDA_FUNCTION_NAME=stg_bg
 	cp stg.env ../dist/.env
 	filename="stg_upload.zip"
 	rm ${dir}/../${filename}
 	echo 'Zip for STG'
 elif [ $1 = 'prd' ]; then
+	LAMBDA_FUNCTION_NAME=callNotionUpdate
 	cp prd.env ../dist/.env
 	filename="prd_upload.zip"
 	rm ${dir}/../${filename}

@@ -8,6 +8,7 @@ async function sendMessage(messageBody) {
     QueueUrl: CONST.SQS_QUEUE_URL,
     MessageBody: messageBody,
   };
+
   const command = new SendMessageCommand(params);
 
   try {

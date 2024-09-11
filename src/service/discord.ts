@@ -17,7 +17,7 @@ async function loadCustomConstants() {
 }
 
 const sendApi = async (endpoint, method, body) => {
-  console.log(method + " : " + endpoint + "botkey : " + bot_key);
+  console.log(method + " : " + endpoint + "  botkey : " + bot_key);
   const response = await fetch(endpoint, {
     headers: {
       accept: "*/*",
@@ -39,15 +39,13 @@ const sendApi = async (endpoint, method, body) => {
   })
     .then((response) => {
       if (response.ok) {
+        console.log("メッセージが正常に送信されました");
         return response.json();
       } else {
         return response.json().then((error) => {
           throw new Error(`Error ${response.status}: ${error.message}`);
         });
       }
-    })
-    .then((data) => {
-      console.log("メッセージが正常に送信されました");
     })
     .catch((error) => {
       console.error("メッセージの送信に失敗しました:", error.message);
@@ -166,6 +164,8 @@ const getDisplayData = async () => {
 };
 
 const sendDiscordMessage = async (message, channelId) => {
+  message = message + "\n:send by " + CONST.SERVER_INFO;
+
   const url = "https://discord.com/api/v10/channels/" + channelId + "/messages";
   const body = {
     content: message,
@@ -174,9 +174,27 @@ const sendDiscordMessage = async (message, channelId) => {
   return result;
 };
 
+const sendDiscordDm = async (message, userId) => {
+  message = message + "\n:send by " + CONST.SERVER_INFO;
+
+  const url = "https://discord.com/api/v10/users/@me/channels";
+  const body = {
+    recipient_id: userId,
+  };
+  const channelId = await sendApi(url, "post", body);
+  const sendUrl =
+    "https://discord.com/api/v10/channels/" + channelId.id + "/messages";
+  const sendBody = {
+    content: message,
+  };
+  const result = await sendApi(sendUrl, "post", sendBody);
+  return result;
+};
+
 const discordService = {
   sendApi,
   sendDiscordMessage,
+  sendDiscordDm,
   getList,
   getMemberList,
   getDisplayData,
