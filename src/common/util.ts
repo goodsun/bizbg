@@ -7,5 +7,5 @@ export const sleep = (waitTime) => {
 };
 
 export const log = (title, message) => {
-  console.log();
+  console.log(title + ":" + message);
 };

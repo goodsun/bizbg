@@ -50,7 +50,6 @@ const sendApi = async (endpoint, method, body) => {
     .catch((error) => {
       console.error("メッセージの送信に失敗しました:", error.message);
     });
-  console.dir(response);
   return response;
 };
 

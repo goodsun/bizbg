@@ -55,10 +55,8 @@ const deleteItem = async (params) => {
 };
 
 const query = async (params) => {
-  console.dir(params);
   try {
     const result = await client.send(new QueryCommand(params));
-    console.dir(result);
     return result;
   } catch (err) {
     console.log(err);
@@ -66,7 +64,6 @@ const query = async (params) => {
 };
 
 const scan = async (params) => {
-  console.dir(params);
   try {
     const result = await client.send(new ScanCommand(params));
     return result;
