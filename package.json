@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "sh ./deploy/build.sh local && exit 1 ",
     "stg": "sh ./deploy/build.sh stg && exit 1 ",
-    "prd": "sh ./deploy/build.sh prd && exit 1"
+    "prd": "sh ./deploy/build.sh prd && exit 1",
+    "flow": "sh ./deploy/build.sh flow && exit 1"
   },
   "repository": {
     "type": "git",

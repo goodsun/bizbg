@@ -18,6 +18,12 @@ elif [ $1 = 'prd' ]; then
 	filename="prd_upload.zip"
 	rm ${dir}/../${filename}
 	echo 'Zip for PRD'
+elif [ $1 = 'flow' ]; then
+	LAMBDA_FUNCTION_NAME=flow-bg
+	cp flow.env ../dist/.env
+	filename="flow_upload.zip"
+	rm ${dir}/../${filename}
+	echo 'Zip for FLOW'
 elif [ $1 = 'local' ]; then
 	cp local.env ../dist/.env
 elif [ $1 = 'test' ]; then
