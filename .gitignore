@@ -131,8 +131,5 @@ dist
 
 # uploadfile
 *.zip
-prd.env
-stg.env
-flow.env
-local.env
+bg_*.env
 customSettings.ts

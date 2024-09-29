@@ -8,26 +8,26 @@ mkdir ../dist
 
 if [ $1 = 'stg' ]; then
 	LAMBDA_FUNCTION_NAME=stg_bg
-	cp stg.env ../dist/.env
+	cp bg_stg.env ../dist/.env
 	filename="stg_upload.zip"
 	rm ${dir}/../${filename}
 	echo 'Zip for STG'
 elif [ $1 = 'prd' ]; then
 	LAMBDA_FUNCTION_NAME=callNotionUpdate
-	cp prd.env ../dist/.env
+	cp bg_prd.env ../dist/.env
 	filename="prd_upload.zip"
 	rm ${dir}/../${filename}
 	echo 'Zip for PRD'
 elif [ $1 = 'flow' ]; then
 	LAMBDA_FUNCTION_NAME=flow-bg
-	cp flow.env ../dist/.env
+	cp bg_flow.env ../dist/.env
 	filename="flow_upload.zip"
 	rm ${dir}/../${filename}
 	echo 'Zip for FLOW'
 elif [ $1 = 'local' ]; then
-	cp local.env ../dist/.env
+	cp bg_local.env ../dist/.env
 elif [ $1 = 'test' ]; then
-	cp local.env ../dist/.env
+	cp bg_local.env ../dist/.env
 else
 	echo 'input error'
 	exit
