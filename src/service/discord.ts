@@ -163,7 +163,9 @@ const getDisplayData = async () => {
 };
 
 const sendDiscordMessage = async (message, channelId) => {
-  message = message + "\n:send by " + CONST.SERVER_INFO;
+  if (CONST.API_ENV != "PRD") {
+    message = message + "\n:send by " + CONST.SERVER_INFO;
+  }
 
   const url = "https://discord.com/api/v10/channels/" + channelId + "/messages";
   const body = {
@@ -174,8 +176,9 @@ const sendDiscordMessage = async (message, channelId) => {
 };
 
 const sendDiscordDm = async (message, userId) => {
-  message = message + "\n:send by " + CONST.SERVER_INFO;
-
+  if (CONST.API_ENV != "PRD") {
+    message = message + "\n:send by " + CONST.SERVER_INFO;
+  }
   const url = "https://discord.com/api/v10/users/@me/channels";
   const body = {
     recipient_id: userId,
