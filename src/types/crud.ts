@@ -6,7 +6,7 @@ export const CRUD = {
     TableName: TableName,
     AttributeDefinitions: [
       { AttributeName: "PartitionName", AttributeType: "S" },
-      { AttributeName: "DiscordId", AttributeType: "N" },
+      { AttributeName: "DiscordId", AttributeType: "S" },
     ],
     KeySchema: [
       { AttributeName: "PartitionName", KeyType: "HASH" },
@@ -21,7 +21,7 @@ export const CRUD = {
     TableName: TableName,
     Item: {
       PartitionName: { S: "Users" },
-      DiscordId: { N: "0" },
+      DiscordId: { S: "0" },
       Name: { S: "Discord Name" },
       Username: { S: "Discord Name" },
       Icon: { S: "https://example.com/test.png" },
@@ -35,14 +35,14 @@ export const CRUD = {
     TableName: TableName,
     Key: {
       PartitionName: { S: "Users" },
-      DiscordId: { N: "0" },
+      DiscordId: { S: "0" },
     },
   },
   update: {
     TableName: TableName,
     Key: {
       PartitionName: { S: "Users" },
-      DiscordId: { N: "0" },
+      DiscordId: { S: "0" },
     },
     UpdateExpression: "SET Icon = :newVal",
     ExpressionAttributeNames: {},
@@ -52,7 +52,7 @@ export const CRUD = {
     TableName: TableName,
     Key: {
       PartitionName: { S: "Users" },
-      DiscordId: { N: "0" },
+      DiscordId: { S: "0" },
     },
   },
   query: {

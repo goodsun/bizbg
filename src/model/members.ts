@@ -18,7 +18,7 @@ const getAllList = async () => {
 const getMember = async (req) => {
   let params = CRUD.read;
   params.TableName = TableName;
-  params.Key.DiscordId.N = req.params.id;
+  params.Key.DiscordId.S = req.params.id;
   return await dynamoService.getItem(params);
 };
 
@@ -54,9 +54,9 @@ const getDisplayData = async () => {
         key +
         " | " +
         'Id: <b><a href="/member/' +
-        data.DiscordId.N +
+        data.DiscordId.S +
         '">' +
-        data.DiscordId.N +
+        data.DiscordId.S +
         "</a></b>" +
         " name: <b>" +
         data.Name.S +
@@ -71,7 +71,7 @@ const memberCreate = async (member) => {
   console.log("dynamo メンバー登録");
   let params = CRUD.write;
   params.TableName = TableName;
-  params.Item.DiscordId.N = String(member.id);
+  params.Item.DiscordId.S = String(member.id);
   params.Item.Name.S = member.name;
   params.Item.Username.S = member.username;
   params.Item.Icon.S = member.icon;
@@ -88,7 +88,7 @@ const memberUpdate = async (member) => {
   console.log("dynamo メンバー更新");
   let params = CRUD.update;
   params.TableName = TableName;
-  params.Key.DiscordId.N = String(member.id);
+  params.Key.DiscordId.S = String(member.id);
   params.UpdateExpression =
     "SET #Name = :Name, #Username = :Username, #Icon = :Icon, #Roles= :roles, #Updated = :updated";
   params.ExpressionAttributeNames = {
@@ -114,21 +114,21 @@ const memberUpdate = async (member) => {
 
 const memberDelete = async (member) => {
   console.log(
-    "dynamo メンバー削除 " + member.DiscordId.N + " name:" + member.Name.S
+    "dynamo メンバー削除 " + member.DiscordId.S + " name:" + member.Name.S
   );
   let params = CRUD.delete;
   params.TableName = TableName;
-  params.Key.DiscordId.N = member.DiscordId.N;
+  params.Key.DiscordId.S = member.DiscordId.S;
   await dynamoService.deleteItem(params);
 };
 
 const memberSoftDelete = async (member) => {
   console.log(
-    "dynamo メンバー退会 " + member.DiscordId.N + " name:" + member.Name.S
+    "dynamo メンバー退会 " + member.DiscordId.S + " name:" + member.Name.S
   );
   let params = CRUD.update;
   params.TableName = TableName;
-  params.Key.DiscordId.N = member.DiscordId.N;
+  params.Key.DiscordId.S = member.DiscordId.S;
   params.UpdateExpression = "SET DeleteFlag = :newVal";
   params.ExpressionAttributeValues = {
     ":newVal": { BOOL: true } as object,
@@ -143,7 +143,7 @@ const memberListUpdate = async (discordList, dynamoList) => {
   for (let key in discordList) {
     const member = discordList[key];
     const filteredItems = dynamoList.filter(
-      (item) => String(item.DiscordId.N) === String(member.id)
+      (item) => String(item.DiscordId.S) === String(member.id)
     );
     if (filteredItems.length == 0) {
       addCnt++;
@@ -171,7 +171,7 @@ const memberListUpdate = async (discordList, dynamoList) => {
     const member = dynamoList[key];
     if (member) {
       const filteredItems = discordList.filter(
-        (item) => String(item.id) === String(member.DiscordId.N)
+        (item) => String(item.id) === String(member.DiscordId.S)
       );
       if (filteredItems.length == 0) {
         delCnt++;
